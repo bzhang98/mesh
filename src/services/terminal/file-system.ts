@@ -10,6 +10,10 @@ function createFileSystem(): FileSystem {
   let currentPath: string[] = [];
 
   function createFile(name: string, content: string = ""): void {
+    if (currentDirectory?.contents[name]?.type === "file") {
+      throw new Error(`File already exists: ${name}`);
+    }
+
     currentDirectory.contents[name] = {
       type: "file",
       name,
@@ -18,6 +22,10 @@ function createFileSystem(): FileSystem {
   }
 
   function createDirectory(name: string): void {
+    if (currentDirectory?.contents[name]?.type === "directory") {
+      throw new Error(`Directory already exists: ${name}`);
+    }
+
     currentDirectory.contents[name] = {
       type: "directory",
       name,
@@ -47,6 +55,7 @@ function createFileSystem(): FileSystem {
       if (nextDir && nextDir.type === "directory") {
         return nextDir;
       }
+      currentPath.pop();
       throw new Error(`Directory not found: ${segment}`);
     }, startDir);
   }

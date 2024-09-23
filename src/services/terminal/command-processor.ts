@@ -25,16 +25,24 @@ function createCommandProcessor(fileSystem: FileSystem): CommandProcessor {
     if (args.length !== 1) {
       return "Usage: mkdir <directory>";
     }
-    fileSystem.createDirectory(args[0]);
-    return "";
+    try {
+      fileSystem.createDirectory(args[0]);
+      return "";
+    } catch (error) {
+      return (error as Error).message;
+    }
   }
 
   function touch(args: string[]): string {
     if (args.length !== 1) {
       return "Usage: touch <file>";
     }
-    fileSystem.createFile(args[0]);
-    return "";
+    try {
+      fileSystem.createFile(args[0]);
+      return "";
+    } catch (error) {
+      return (error as Error).message;
+    }
   }
 
   function pwd(): string {
