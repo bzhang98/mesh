@@ -60,7 +60,6 @@ The ```cat``` commands takes a file name as an argument and outputs the file con
 ##### Usage
 ```cat <filename>```
 
-
 ## Future Improvements
 - Add support for command history navigation
 - Implement tab completion for commands and file names
