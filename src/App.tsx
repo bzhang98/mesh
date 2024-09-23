@@ -6,29 +6,46 @@ import { createTerminal } from "./services/terminal/terminal";
 import TerminalInput from "./components/terminal-input";
 import { Terminal } from "./services/terminal/types";
 
+type Output = { path: string; command: string; result: string };
+
 function App() {
   const [terminal] = useState<Terminal>(createTerminal());
-  const [outputs, setOutputs] = useState<{ command: string; result: string }[]>(
-    []
-  );
+  const [outputs, setOutputs] = useState<
+    Output[]
+  >([]);
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
   }, [outputs]);
 
   function handleSubmit(command: string) {
+    const path = terminal.getPath();
     const result = terminal.executeCommand(command);
-    setOutputs((prevOutputs) => [...prevOutputs, { command, result }]);
+    setOutputs((prevOutputs) => [
+      ...prevOutputs,
+      { path, command, result },
+    ]);
   }
 
   return (
     <div className="text-white text-xl p-4">
       <div className="content">
-        <h1>Welcome to MESH (Minimal Emulated SHell)</h1>
-        <p className="text-pink-500">Version 1.0</p>
+        <p>
+          MESH (Minimal Emulated SHell) -{" "}
+          <span className="text-pink-500">Version 1.0</span>
+        </p>
+        <p>
+          Enter <span className="text-green-500">'help'</span> for a list of
+          available commands.
+        </p>
         {outputs.map((output, index) => (
           <div key={index}>
-            <p className="input-wrapper flex gap-2">{output.command}</p>
+            <div className="flex">
+              <div className="prompt flex">
+                {output.path} <span>&nbsp;$&nbsp;</span>
+              </div>
+              <p>{output.command}</p>
+            </div>
             <p
               style={{
                 whiteSpace: "pre-wrap",
@@ -40,8 +57,12 @@ function App() {
           </div>
         ))}
       </div>
-
-      <TerminalInput onSubmit={handleSubmit} />
+      <div className="flex">
+        <div className="prompt flex">
+          {terminal.getPath()} <span>&nbsp;$&nbsp;</span>
+        </div>
+        <TerminalInput onSubmit={handleSubmit} />
+      </div>
     </div>
   );
 }
