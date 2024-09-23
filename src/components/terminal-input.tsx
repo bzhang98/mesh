@@ -1,6 +1,10 @@
 import { useEffect, useRef } from "react";
 
-export default function TerminalInput({ onSubmit }: { onSubmit: (command: string) => void }) {
+export default function TerminalInput({
+  onSubmit,
+}: {
+  onSubmit: (command: string) => void;
+}) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleKeyDown(event: KeyboardEvent) {
@@ -16,17 +20,9 @@ export default function TerminalInput({ onSubmit }: { onSubmit: (command: string
   useEffect(() => {
     const input = inputRef.current;
     if (input) {
-      input.focus();
-
-      const handleBlur = () => {
-        input.focus();
-      };
-
-      input.addEventListener("blur", handleBlur);
       window.addEventListener("keydown", handleKeyDown as EventListener);
 
       return () => {
-        input.removeEventListener("blur", handleBlur);
         window.removeEventListener("keydown", handleKeyDown as EventListener);
       };
     }
@@ -34,7 +30,11 @@ export default function TerminalInput({ onSubmit }: { onSubmit: (command: string
 
   return (
     <div className="input-wrapper flex gap-2">
-      <input ref={inputRef} type="text" className="bg-black outline-none w-full" />
+      <input
+        ref={inputRef}
+        type="text"
+        className="bg-black outline-none w-full"
+      />
     </div>
   );
 }
