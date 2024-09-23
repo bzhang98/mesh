@@ -31,6 +31,7 @@ export interface CommandProcessor {
 export interface Terminal {
   executeCommand: (commandString: string) => string;
   getHistory: () => string[];
+  getPath: () => string;
 }
 
 export type Command = (args: string[]) => string;

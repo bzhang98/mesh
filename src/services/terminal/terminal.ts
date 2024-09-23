@@ -16,9 +16,14 @@ function createTerminal(): Terminal {
     return [...history];
   }
 
+  function getPath(): string {
+    return fileSystem.getCurrentPath();
+  }
+
   return {
     executeCommand,
     getHistory,
+    getPath,
   };
 }
 
