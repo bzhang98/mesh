@@ -52,7 +52,12 @@ function createFileSystem(): FileSystem {
   }
 
   function listContents(): string[] {
-    return Object.keys(currentDirectory.contents);
+    return Object.entries(currentDirectory.contents).map(([name, node]) => {
+      if (node.type === "directory") {
+        return `/${name}`;
+      }
+      return name;
+    })
   }
 
   function getCurrentPath(): string {
