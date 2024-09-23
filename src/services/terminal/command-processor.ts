@@ -88,7 +88,7 @@ function createCommandProcessor(fileSystem: FileSystem): CommandProcessor {
   };
 
   function execute(commandString: string): string {
-    const [command, ...args] = commandString.split(" ");
+    const [command, ...args] = commandString.trim().split(" ");
     if (command in commands) {
       return commands[command](args);
     } else {
