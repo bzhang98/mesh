@@ -29,12 +29,10 @@ export default function TerminalInput({
   }, []);
 
   return (
-    <div className="input-wrapper flex gap-2">
-      <input
-        ref={inputRef}
-        type="text"
-        className="bg-black outline-none w-full"
-      />
-    </div>
+    <input
+      ref={inputRef}
+      type="text"
+      className="bg-black outline-none w-full"
+    />
   );
 }
