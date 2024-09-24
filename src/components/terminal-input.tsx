@@ -1,11 +1,16 @@
 import { useEffect, useRef } from "react";
+import useArrowNavigation from "../hooks/use-arrow-navigation";
 
 export default function TerminalInput({
   onSubmit,
+  history,
 }: {
   onSubmit: (command: string) => void;
+  history: string[];
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const { selectedItem, handleArrowKeyDown } = useArrowNavigation(history);
 
   function handleKeyDown(event: KeyboardEvent) {
     if (event.key === "Enter") {
@@ -14,8 +19,18 @@ export default function TerminalInput({
         onSubmit(input.value);
         input.value = "";
       }
+    } else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+      event.preventDefault();
+      handleArrowKeyDown(event);
     }
   }
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (input) {
+      input.value = selectedItem;
+    }
+  }, [selectedItem]);
 
   function handleClick() {
     const input = inputRef.current;
@@ -34,7 +49,7 @@ export default function TerminalInput({
         document.addEventListener("click", handleClick);
       };
     }
-  }, []);
+  }, [history]);
 
   return (
     <input
