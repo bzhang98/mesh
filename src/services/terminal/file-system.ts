@@ -41,11 +41,24 @@ function createFileSystem(): FileSystem {
       }
     } else if (path.startsWith("/")) {
       const newPath = path.split("/").filter(Boolean);
-      currentDirectory = navigateToPath(root, newPath);
-      currentPath = newPath;
+      try {
+        const newDirectory = navigateToPath(root, newPath);
+        currentDirectory = newDirectory;
+        currentPath = newPath;
+      } catch (error) {
+        throw new Error((error as Error).message);
+        // Current path remains unchanged
+      }
     } else {
-      currentPath.push(path);
-      currentDirectory = navigateToPath(root, currentPath);
+      const newPath = [...currentPath, path];
+      try {
+        const newDirectory = navigateToPath(root, newPath);
+        currentDirectory = newDirectory;
+        currentPath = newPath;
+      } catch (error) {
+        throw new Error((error as Error).message);
+        // Current path remains unchanged
+      }
     }
   }
 
@@ -55,7 +68,6 @@ function createFileSystem(): FileSystem {
       if (nextDir && nextDir.type === "directory") {
         return nextDir;
       }
-      currentPath.pop();
       throw new Error(`Directory not found: ${segment}`);
     }, startDir);
   }

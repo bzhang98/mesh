@@ -18,12 +18,19 @@ describe("Terminal Service", () => {
 
   test("mkdir creates a new directory", () => {
     terminal.executeCommand("mkdir dir1");
-    expect(terminal.executeCommand("ls")).toBe("dir1");
+    expect(terminal.executeCommand("ls")).toBe("/dir1");
   });
 
   test("mkdir fails when more than one argument is provided", () => {
     expect(terminal.executeCommand("mkdir dir1 dir2 dir3")).toBe(
       "Usage: mkdir <directory>"
+    );
+  });
+
+  test("mkdir fails when directory already exists", () => {
+    terminal.executeCommand("mkdir dir1");
+    expect(terminal.executeCommand("mkdir dir1")).toBe(
+      "Directory already exists: dir1"
     );
   });
 
@@ -40,11 +47,18 @@ describe("Terminal Service", () => {
     );
   });
 
+  test("touch fails when file already exists", () => {
+    terminal.executeCommand("touch file1");
+    expect(terminal.executeCommand("touch file1")).toBe(
+      "File already exists: file1"
+    );
+  });
+
   test("ls lists contents of current directory", () => {
     expect(terminal.executeCommand("ls")).toBe("");
     terminal.executeCommand("touch file1");
     terminal.executeCommand("mkdir dir1");
-    expect(terminal.executeCommand("ls")).toBe("file1 dir1");
+    expect(terminal.executeCommand("ls")).toBe("file1 /dir1");
   });
 
   test("cd changes current directory", () => {
@@ -76,6 +90,19 @@ describe("Terminal Service", () => {
     expect(terminal.executeCommand("cd dir1")).toBe(
       "Directory not found: dir1"
     );
+    expect(terminal.getPath()).toBe("/");
+    
+    expect(terminal.executeCommand("cd /dir1")).toBe(
+      "Directory not found: dir1"
+    );
+    expect(terminal.getPath()).toBe("/");
+
+    terminal.executeCommand("mkdir dir1");
+    terminal.executeCommand("cd dir1");
+    expect(terminal.executeCommand("cd dir2")).toBe(
+      "Directory not found: dir2"
+    );
+    expect(terminal.getPath()).toBe("/dir1");
   });
 
   test("echo with no arguments returns the input string", () => {
