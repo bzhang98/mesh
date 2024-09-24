@@ -6,13 +6,13 @@ import { createTerminal } from "./services/terminal/terminal";
 import TerminalInput from "./components/terminal-input";
 import { Terminal } from "./services/terminal/types";
 
+
 type Output = { path: string; command: string; result: string };
 
 function App() {
   const [terminal] = useState<Terminal>(createTerminal());
-  const [outputs, setOutputs] = useState<
-    Output[]
-  >([]);
+  const [outputs, setOutputs] = useState<Output[]>([]);
+  const [history, setHistory] = useState<string[]>(terminal.getHistory());
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -21,10 +21,8 @@ function App() {
   function handleSubmit(command: string) {
     const path = terminal.getPath();
     const result = terminal.executeCommand(command);
-    setOutputs((prevOutputs) => [
-      ...prevOutputs,
-      { path, command, result },
-    ]);
+    setOutputs((prevOutputs) => [...prevOutputs, { path, command, result }]);
+    setHistory(terminal.getHistory());
   }
 
   return (
@@ -61,7 +59,7 @@ function App() {
         <div className="prompt flex">
           {terminal.getPath()} <span>&nbsp;$&nbsp;</span>
         </div>
-        <TerminalInput onSubmit={handleSubmit} />
+        <TerminalInput onSubmit={handleSubmit} history={history} />
       </div>
     </div>
   );
