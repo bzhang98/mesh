@@ -22,6 +22,8 @@ export interface FileSystem {
   getCurrentPath: () => string;
   writeFile: (name: string, content: string, append: boolean) => void;
   readFile: (name: string) => string;
+  rm: (name: string) => void;
+  rmrf: (name: string) => void;
 }
 
 export interface CommandProcessor {

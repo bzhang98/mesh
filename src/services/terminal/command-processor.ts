@@ -84,6 +84,26 @@ function createCommandProcessor(fileSystem: FileSystem): CommandProcessor {
     }
   }
 
+  function rm(args: string[]): string {
+    if (args.length !== 1) return "Usage: rm <file> or rm <directory>";
+    try {
+      fileSystem.rm(args[0]);
+      return "";
+    } catch (error) {
+      return (error as Error).message;
+    }
+  }
+
+  function rmrf(args: string[]): string {
+    if (args.length !== 1) return "Usage: rmrf<file> or rmrf <directory>";
+    try {
+      fileSystem.rmrf(args[0]);
+      return "";
+    } catch (error) {
+      return (error as Error).message;
+    }
+  }
+
   const commands: Record<string, (args: string[]) => any> = {
     help,
     ls,
@@ -93,6 +113,8 @@ function createCommandProcessor(fileSystem: FileSystem): CommandProcessor {
     pwd,
     echo,
     cat,
+    rm,
+    rmrf,
   };
 
   function execute(commandString: string): string {

@@ -120,4 +120,61 @@ describe("Terminal Service", () => {
     terminal.executeCommand("echo world >> file1");
     expect(terminal.executeCommand("cat file1")).toBe("hello\nworld\n");
   });
+
+  test("cat fails when file does not exist", () => {
+    expect(terminal.executeCommand("cat file1")).toBe("File not found: file1");
+  });
+
+  test("rm removes a file", () => {
+    terminal.executeCommand("touch file1");
+    expect(terminal.executeCommand("ls")).toBe("file1");
+    terminal.executeCommand("rm file1");
+    expect(terminal.executeCommand("ls")).toBe("");
+  });
+
+  test("rm removes a directory", () => {
+    terminal.executeCommand("mkdir dir1");
+    expect(terminal.executeCommand("ls")).toBe("dir1/");
+    terminal.executeCommand("rm dir1");
+    expect(terminal.executeCommand("ls")).toBe("");
+  });
+
+  test("rm fails when file does not exist", () => {
+    expect(terminal.executeCommand("rm file1")).toBe("File or directory not found: file1");
+  });
+
+  test("rm fails when directory is not empty", () => {
+    terminal.executeCommand("mkdir dir1");
+    terminal.executeCommand("cd dir1");
+    terminal.executeCommand("touch file1");
+    terminal.executeCommand("cd ..");
+    expect(terminal.executeCommand("rm dir1")).toBe("Cannot remove non-empty directory: dir1");
+  });
+
+  test("rmrf removes a file", () => {
+    terminal.executeCommand("touch file1");
+    expect(terminal.executeCommand("ls")).toBe("file1");
+    terminal.executeCommand("rmrf file1");
+    expect(terminal.executeCommand("ls")).toBe("");
+  });
+
+  test("rmrf removes a directory", () => {
+    terminal.executeCommand("mkdir dir1");
+    expect(terminal.executeCommand("ls")).toBe("dir1/");
+    terminal.executeCommand("rmrf dir1");
+    expect(terminal.executeCommand("ls")).toBe("");
+  });
+
+  test("rmrf fails when file does not exist", () => {
+    expect(terminal.executeCommand("rmrf file1")).toBe("File or directory not found: file1");
+  });
+
+  test("rmrf removes a directory even when it is not empty", () => {
+    terminal.executeCommand("mkdir dir1");
+    terminal.executeCommand("cd dir1");
+    terminal.executeCommand("touch file1");
+    terminal.executeCommand("cd ..");
+    terminal.executeCommand("rmrf dir1");
+    expect(terminal.executeCommand("ls")).toBe("");
+  });
 });

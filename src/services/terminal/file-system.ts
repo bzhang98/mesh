@@ -34,6 +34,7 @@ function createFileSystem(): FileSystem {
   }
 
   function changeDirectory(path: string): void {
+    path.endsWith("/") && (path = path.slice(0, -1));
     if (path === "..") {
       if (currentPath.length > 0) {
         currentPath.pop();
@@ -102,6 +103,25 @@ function createFileSystem(): FileSystem {
     throw new Error(`File not found: ${name}`);
   }
 
+  function rm(name: string): void {
+    const item = currentDirectory.contents[name];
+    if (!item) {
+      throw new Error(`File or directory not found: ${name}`);
+    }
+    if (item.type === "directory" && Object.keys(item.contents).length > 0) {
+      throw new Error(`Cannot remove non-empty directory: ${name}`);
+    }
+    delete currentDirectory.contents[name];
+  }
+
+  function rmrf(name: string): void {
+    const item = currentDirectory.contents[name];
+    if (!item) {
+      throw new Error(`File or directory not found: ${name}`);
+    }
+    delete currentDirectory.contents[name];
+  }
+
   return {
     createFile,
     createDirectory,
@@ -110,6 +130,8 @@ function createFileSystem(): FileSystem {
     getCurrentPath,
     writeFile,
     readFile,
+    rm,
+    rmrf,
   };
 }
 
