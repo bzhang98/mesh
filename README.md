@@ -4,6 +4,8 @@ This project implements a simulated terminal environment within a React applicat
 ## Features
 - In-memory file system with support for files and directories
 - Command processor with support for common Unix-like commands
+- Tab completion
+- Arrow key navigation of history
 - TypeScript for improved type safety and developer experience
 - React component for rendering the terminal interface
 
@@ -59,6 +61,22 @@ The ```cat``` commands takes a file name as an argument and outputs the file con
 
 ##### Usage
 ```cat <filename>```
+
+#### ```rm```
+The ```rm``` command takes a file or directory name as an argument and deletes it.
+**Note: this will only work with empty directories**
+
+##### Usage
+- ```rm <file>```
+- ```rm <directory>```
+
+#### ```rmrf```
+The ```rm``` command takes a file or directory name as an argument and deletes it.
+**Note: this will delete both empty and non-emtpy directories**
+
+##### Usage
+- ```rmrf <file>```
+- ```rmrf <directory>```
 
 ## Live Preview
 Coming Soon ⏳
