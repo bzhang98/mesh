@@ -75,7 +75,7 @@ function createFileSystem(): FileSystem {
   function listContents(): string[] {
     return Object.entries(currentDirectory.contents).map(([name, node]) => {
       if (node.type === "directory") {
-        return `/${name}`;
+        return `${name}/`;
       }
       return name;
     })
