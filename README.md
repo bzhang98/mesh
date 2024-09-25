@@ -79,7 +79,7 @@ The ```rmrf``` command takes a file or directory name as an argument and deletes
 - ```rmrf <directory>```
 
 ## Live Preview
-<a>https://mesh-delta.vercel.app/</a>
+[Live Demo](https://mesh-delta.vercel.app/)
 
 ## Future Improvements
 🚧 Save files locally or on the cloud
