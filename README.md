@@ -82,10 +82,10 @@ The ```rmrf``` command takes a file or directory name as an argument and deletes
 [Live Demo](https://mesh-delta.vercel.app/)
 
 ## Future Improvements
-🚧 Save files locally or on the cloud
-🚧 Support for more complex commands (grep, find, etc.)
-🚧 Pipeline support
-🚧 More powerful text editing capabilities
+- 🚧 Save files locally or on the cloud
+- 🚧 Support for more complex commands (grep, find, etc.)
+- 🚧 Pipeline support
+- 🚧 More powerful text editing capabilities
 
 ## Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
