@@ -18,7 +18,7 @@ describe("Terminal Service", () => {
 
   test("mkdir creates a new directory", () => {
     terminal.executeCommand("mkdir dir1");
-    expect(terminal.executeCommand("ls")).toBe("/dir1");
+    expect(terminal.executeCommand("ls")).toBe("dir1/");
   });
 
   test("mkdir fails when more than one argument is provided", () => {
@@ -58,7 +58,7 @@ describe("Terminal Service", () => {
     expect(terminal.executeCommand("ls")).toBe("");
     terminal.executeCommand("touch file1");
     terminal.executeCommand("mkdir dir1");
-    expect(terminal.executeCommand("ls")).toBe("file1 /dir1");
+    expect(terminal.executeCommand("ls")).toBe("file1 dir1/");
   });
 
   test("cd changes current directory", () => {
