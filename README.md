@@ -71,7 +71,7 @@ The ```rm``` command takes a file or directory name as an argument and deletes i
 - ```rm <directory>```
 
 #### ```rmrf```
-The ```rm``` command takes a file or directory name as an argument and deletes it.
+The ```rmrf``` command takes a file or directory name as an argument and deletes it.
 **Note: this will delete both empty and non-emtpy directories**
 
 ##### Usage
