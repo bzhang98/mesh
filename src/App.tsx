@@ -6,7 +6,6 @@ import { createTerminal } from "./services/terminal/terminal";
 import TerminalInput from "./components/terminal-input";
 import { Terminal } from "./services/terminal/types";
 
-
 type Output = { path: string; command: string; result: string };
 
 function App() {
@@ -55,12 +54,11 @@ function App() {
           </div>
         ))}
       </div>
-      <div className="flex">
-        <div className="prompt flex">
-          {terminal.getPath()} <span>&nbsp;$&nbsp;</span>
-        </div>
-        <TerminalInput onSubmit={handleSubmit} history={history} />
-      </div>
+      <TerminalInput
+        onSubmit={handleSubmit}
+        history={history}
+        terminal={terminal}
+      />
     </div>
   );
 }
