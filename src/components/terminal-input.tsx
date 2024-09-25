@@ -26,6 +26,7 @@ export default function TerminalInput({
         .slice(1),
       directoryContents: terminal.executeCommandNoHistory("ls").split(" "),
     });
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
@@ -34,11 +35,14 @@ export default function TerminalInput({
         onSubmit(input!.value);
         input!.value = "";
         setInputValue("");
+        setShowSuggestions(false);
       } else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
         event.preventDefault();
         handleArrowKeyDown(event);
+        setShowSuggestions(false);
       } else if (event.key === "Tab") {
         handleTabKeyDown(event);
+        setShowSuggestions(true);
       }
     },
     [history, suggestions, selectedSuggestion]
@@ -97,6 +101,20 @@ export default function TerminalInput({
           className="bg-black outline-none w-full"
         />
       </div>
+      {showSuggestions && (
+        <div className="flex gap-4 bg-black p-2">
+          {suggestions.map((suggestion, index) => (
+            <div
+              key={index}
+              className={`${
+                selectedSuggestion === suggestion ? "bg-gray-700" : ""
+              }`}
+            >
+              {suggestion}
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }
