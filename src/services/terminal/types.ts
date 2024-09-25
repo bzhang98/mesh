@@ -30,6 +30,7 @@ export interface CommandProcessor {
 
 export interface Terminal {
   executeCommand: (commandString: string) => string;
+  executeCommandNoHistory: (commandString: string) => string;
   getHistory: () => string[];
   getPath: () => string;
 }

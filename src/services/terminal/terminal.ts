@@ -12,6 +12,10 @@ function createTerminal(): Terminal {
     return commandProcessor.execute(commandString);
   }
 
+  function executeCommandNoHistory(commandString: string): string {
+    return commandProcessor.execute(commandString);
+  }
+
   function getHistory(): string[] {
     return [...history];
   }
@@ -22,6 +26,7 @@ function createTerminal(): Terminal {
 
   return {
     executeCommand,
+    executeCommandNoHistory,
     getHistory,
     getPath,
   };
